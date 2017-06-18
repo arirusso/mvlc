@@ -1,11 +1,11 @@
 require "helper"
 
-class MMPlayer::Player::WrapperTest < Minitest::Test
+class MVLC::Player::WrapperTest < Minitest::Test
 
   context "Wrapper" do
 
     setup do
-      @player = MMPlayer::Player::Wrapper.new
+      @player = MVLC::Player::Wrapper.new
       @mplayer = Object.new
       @mplayer.stubs(:load_file).returns(true)
       out = Object.new
@@ -120,8 +120,8 @@ class MMPlayer::Player::WrapperTest < Minitest::Test
       context "#throttle?" do
 
         setup do
-          @messenger = MMPlayer::Player::Messenger.new
-          @limit = MMPlayer::Player::Messenger::FREQUENCY_LIMIT
+          @messenger = MVLC::Player::Messenger.new
+          @limit = MVLC::Player::Messenger::FREQUENCY_LIMIT
         end
 
         should "respect message frequency" do

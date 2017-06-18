@@ -1,12 +1,12 @@
 require "helper"
 
-class MMPlayer::ContextTest < Minitest::Test
+class MVLC::ContextTest < Minitest::Test
 
   context "Context" do
 
     setup do
       @input = Object.new
-      @context = MMPlayer::Context.new(@input)
+      @context = MVLC::Context.new(@input)
       @player = Object.new
       @context.player.stubs(:player).returns(@player)
       @context.player.stubs(:quit).returns(true)

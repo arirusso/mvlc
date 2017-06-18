@@ -1,4 +1,4 @@
-module MMPlayer
+module MVLC
 
   module Player
 

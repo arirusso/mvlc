@@ -1,13 +1,13 @@
 require "helper"
 
-class MMPlayer::Instructions::PlayerTest < Minitest::Test
+class MVLC::Instructions::PlayerTest < Minitest::Test
 
   context "Player" do
 
     setup do
       @input = Object.new
-      @context = MMPlayer::Context.new(@input)
-      assert @context.kind_of?(MMPlayer::Instructions::Player)
+      @context = MVLC::Context.new(@input)
+      assert @context.kind_of?(MVLC::Instructions::Player)
     end
 
     context "#on_end_of_file" do

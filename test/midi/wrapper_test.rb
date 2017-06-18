@@ -1,12 +1,12 @@
 require "helper"
 
-class MMPlayer::MIDI::WrapperTest < Minitest::Test
+class MVLC::MIDI::WrapperTest < Minitest::Test
 
   context "Wrapper" do
 
     setup do
       @input = Object.new
-      @midi = MMPlayer::MIDI::Wrapper.new(@input)
+      @midi = MVLC::MIDI::Wrapper.new(@input)
     end
 
     context "#handle_new_event" do

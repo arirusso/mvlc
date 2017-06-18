@@ -1,4 +1,4 @@
-module MMPlayer
+module MVLC
 
   module Player
 
@@ -26,7 +26,7 @@ module MMPlayer
       # @return [MPlayer::Slave]
       def ensure_invoked(file, state)
         if @player.nil? && @thread.nil?
-          @thread = ::MMPlayer::Thread.new(:timeout => false) do
+          @thread = ::MVLC::Thread.new(:timeout => false) do
             @player = MPlayer::Slave.new(file, :options => @flags)
             state.handle_start
           end

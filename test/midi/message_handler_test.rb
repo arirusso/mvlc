@@ -1,11 +1,11 @@
 require "helper"
 
-class MMPlayer::MIDI::MessageHandlerTest < Minitest::Test
+class MVLC::MIDI::MessageHandlerTest < Minitest::Test
 
   context "MessageHandler" do
 
     setup do
-      @handler = MMPlayer::MIDI::MessageHandler.new
+      @handler = MVLC::MIDI::MessageHandler.new
     end
 
     context "#note_message" do

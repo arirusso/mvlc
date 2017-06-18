@@ -1,4 +1,4 @@
-module MMPlayer
+module MVLC
 
   # DSL context for interfacing an instance of MPlayer with MIDI
   class Context
@@ -50,7 +50,7 @@ module MMPlayer
 
     # Main playback loop
     def playback_loop
-      ::MMPlayer::Thread.new(:timeout => false) do
+      ::MVLC::Thread.new(:timeout => false) do
         until @player.active?
           sleep(0.1)
         end

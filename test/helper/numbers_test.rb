@@ -1,12 +1,12 @@
 require "helper"
 
-class MMPlayer::Helper::NumbersTest < Minitest::Test
+class MVLC::Helper::NumbersTest < Minitest::Test
 
   context "Numbers" do
 
     setup do
       @util = Object.new
-      @util.class.send(:include, MMPlayer::Helper::Numbers)
+      @util.class.send(:include, MVLC::Helper::Numbers)
     end
 
     context "#to_midi_value" do

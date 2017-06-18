@@ -1,7 +1,7 @@
-# MMPlayer
-# Control MPlayer with MIDI
+# MVLC
+# Control VLC media player with MIDI
 #
-# (c)2015-2017 Ari Russo
+# (c)2017 Ari Russo
 # Apache 2.0 License
 
 # libs
@@ -13,18 +13,18 @@ require "timeout"
 require "unimidi"
 
 # modules
-require "mmplayer/helper/numbers"
-require "mmplayer/instructions"
-require "mmplayer/midi"
-require "mmplayer/player"
-require "mmplayer/thread"
+require "mvlc/helper/numbers"
+require "mvlc/instructions"
+require "mvlc/midi"
+require "mvlc/player"
+require "mvlc/thread"
 
 # classes
-require "mmplayer/context"
+require "mvlc/context"
 
-module MMPlayer
+module MVLC
 
-  VERSION = "0.0.12"
+  VERSION = "0.0.1"
 
   # Shortcut to Context constructor
   def self.new(*args, &block)

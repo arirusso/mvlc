@@ -1,4 +1,4 @@
-module MMPlayer
+module MVLC
 
   module Player
 
@@ -17,7 +17,7 @@ module MMPlayer
         timestamp = Time.now.to_f
         # Throttled messages are disregarded
         if @messages.empty? || !throttle?(timestamp, @messages.last[:timestamp])
-          thread = ::MMPlayer::Thread.new(&block)
+          thread = ::MVLC::Thread.new(&block)
           record_message(thread, timestamp)
         end
       end

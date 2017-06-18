@@ -1,4 +1,4 @@
-module MMPlayer
+module MVLC
 
   module MIDI
     # Directs what should happen when messages are received

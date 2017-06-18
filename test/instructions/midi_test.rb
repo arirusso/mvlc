@@ -1,13 +1,13 @@
 require "helper"
 
-class MMPlayer::Instructions::MIDITest < Minitest::Test
+class MVLC::Instructions::MIDITest < Minitest::Test
 
   context "MIDI" do
 
     setup do
       @input = Object.new
-      @context = MMPlayer::Context.new(@input)
-      assert @context.kind_of?(MMPlayer::Instructions::MIDI)
+      @context = MVLC::Context.new(@input)
+      assert @context.kind_of?(MVLC::Instructions::MIDI)
     end
 
     context "#note" do

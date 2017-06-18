@@ -3,15 +3,15 @@ $:.unshift(File.join("..", "lib"))
 
 # Assign MIDI controls to MPlayer
 
-require "mmplayer"
+require "mvlc"
 
 # Prompt the user to select a MIDI input
 @input = UniMIDI::Input.gets
 
-@player = MMPlayer.new(@input, :mplayer_flags => "-fs") do
+@player = MVLC.new(@input, :mplayer_flags => "-fs") do
 
   # Subscribe to MIDI channel 0 only for received messages.
-  # MMPlayer will respond to all channels by default
+  # MVLC will respond to all channels by default
   rx_channel 0
 
   # When a MIDI start message is received, start playing the media file 1.mov

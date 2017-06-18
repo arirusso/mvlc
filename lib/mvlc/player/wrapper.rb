@@ -1,4 +1,4 @@
-module MMPlayer
+module MVLC
 
   module Player
 
@@ -25,7 +25,7 @@ module MMPlayer
         if @player.nil?
           false
         else
-          @threads << ::MMPlayer::Thread.new(:timeout => 2) do
+          @threads << ::MVLC::Thread.new(:timeout => 2) do
             @player.load_file(file)
             handle_start
           end
@@ -52,7 +52,7 @@ module MMPlayer
       def playback_loop
         loop do
           if handle_progress?
-            @threads << ::MMPlayer::Thread.new { handle_progress }
+            @threads << ::MVLC::Thread.new { handle_progress }
           end
           handle_eof if handle_eof?
           sleep(0.05)
