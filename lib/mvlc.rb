@@ -7,10 +7,10 @@
 # libs
 require "forwardable"
 require "midi-eye"
-require "mplayer-ruby"
 require "scale"
 require "timeout"
 require "unimidi"
+require "vlc-client"
 
 # modules
 require "mvlc/helper/numbers"
