@@ -16,6 +16,15 @@ module MVLC
         @player = VLC::System.new(headless: true)
       end
 
+      def seek_percent(percent)
+        begin
+          length_in_seconds = @player.length
+          seconds = length_in_seconds * (percent / 100.0)
+          @player.seek(seconds)
+        rescue VLC::ReadTimeoutError
+        end
+      end
+
       # Play a media file
       # @param [String] file
       # @return [Boolean]
