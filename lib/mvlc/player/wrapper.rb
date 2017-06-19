@@ -10,9 +10,7 @@ module MVLC
       attr_reader :state, :player
 
       # @param [Hash] options
-      # @option options [String] :flags MPlayer command-line flags to use on startup
       def initialize(options = {})
-        @messenger = Messenger.new
         @callback = {}
         @state = State.new
         @player = VLC::System.new(headless: true)
