@@ -7,6 +7,9 @@ class MVLC::Player::WrapperTest < Minitest::Test
     setup do
       @player = Object.new
       @player.stubs(:quit)
+      conn = Object.new
+      conn.stubs(:write)
+      @player.stubs(:connection).returns(conn)
       VLC::System.stubs(:new).returns(@player)
       @player = MVLC::Player::Wrapper.new
     end
