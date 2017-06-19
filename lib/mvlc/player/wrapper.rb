@@ -5,6 +5,8 @@ module MVLC
     # Wrapper for MPlayer functionality
     class Wrapper
 
+      VOLUME_FACTOR = 2.4
+
       extend Forwardable
 
       attr_reader :state, :player
@@ -14,6 +16,10 @@ module MVLC
         @callback = {}
         @state = State.new
         @player = VLC::System.new(headless: true)
+      end
+
+      def volume(value)
+        @player.volume(value * VOLUME_FACTOR)
       end
 
       def seek_percent(percent)
@@ -81,7 +87,8 @@ module MVLC
       # Cause MPlayer to exit
       # @return [Boolean]
       def quit
-        @player.quit
+        @player.connection.write("quit")
+        @player.connection.write("logout")
         true
       end
 

@@ -32,8 +32,12 @@ module MVLC
     # @return [Boolean]
     def start(options = {})
       @midi.start
-      @playback_thread = playback_loop
-      @playback_thread.join unless !!options[:background]
+      begin
+        @playback_thread = playback_loop
+        @playback_thread.join unless !!options[:background]
+      rescue SystemExit, Interrupt
+        stop
+      end
       true
     end
 
