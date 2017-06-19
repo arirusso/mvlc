@@ -110,7 +110,7 @@ module MVLC
       # Has the end of a media file been reached?
       # @return [Boolean]
       def eof?
-        @state.eof_reached? && get_player_output.size < 1
+        @state.eof_reached? && @player.stopped?
       end
 
     end
