@@ -24,6 +24,7 @@ module MVLC
           false
         else
           @player.play(file)
+          handle_start
           true
         end
       end
@@ -107,10 +108,22 @@ module MVLC
         eof? && eof_callback?
       end
 
+      # Handle the end of playback for a single media file
+      def handle_eof
+        @callback[:end_of_file].call
+        @state.handle_eof
+        true
+      end
+
+      # Handle the beginning of playback for a single media file
+      def handle_start
+        @state.handle_start
+      end
+
       # Has the end of a media file been reached?
       # @return [Boolean]
       def eof?
-        @state.eof_reached? && @player.stopped?
+        @state.eof_reached? && !@player.playing?
       end
 
     end
