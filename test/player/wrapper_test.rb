@@ -44,7 +44,6 @@ class MVLC::Player::WrapperTest < Minitest::Test
 
       should "lazily invoke mplayer and play" do
         assert @player.play("file.mov")
-        #refute_nil @player.instance_variable_get("@player")
       end
 
     end

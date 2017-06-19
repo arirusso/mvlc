@@ -27,7 +27,7 @@ module MVLC
           length_in_seconds = @player.length
           seconds = length_in_seconds * (percent / 100.0)
           @player.seek(seconds)
-        rescue VLC::ReadTimeoutError
+        rescue VLC::ReadTimeoutError, VLC::BrokenConnectionError
         end
       end
 
@@ -87,8 +87,7 @@ module MVLC
       # Cause MPlayer to exit
       # @return [Boolean]
       def quit
-        @player.connection.write("quit")
-        @player.connection.write("logout")
+        @player.server.stop
         true
       end
 
@@ -136,10 +135,18 @@ module MVLC
         @state.handle_start
       end
 
+      def playing?
+        begin
+          @player.playing?
+        rescue VLC::ReadTimeoutError, VLC::BrokenConnectionError
+          false
+        end
+      end
+
       # Has the end of a media file been reached?
       # @return [Boolean]
       def eof?
-        @state.eof_reached? && !@player.playing?
+        @state.eof_reached? && !playing?
       end
 
     end
