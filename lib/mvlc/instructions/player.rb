@@ -32,8 +32,8 @@ module MVLC
 
       # Add all of the MPlayer::Slave methods to the context as instructions
       def method_missing(method, *args, &block)
-        if @player.mplayer_respond_to?(method)
-          @player.mplayer_send(method, *args, &block)
+        if @player.respond_to?(method)
+          @player.send(method, *args, &block)
         else
           super
         end
@@ -41,7 +41,7 @@ module MVLC
 
       # Add all of the MPlayer::Slave methods to the context as instructions
       def respond_to_missing?(method, include_private = false)
-        super || @player.mplayer_respond_to?(method)
+        super || @player.respond_to?(method)
       end
 
     end

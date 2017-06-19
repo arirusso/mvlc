@@ -5,6 +5,7 @@ class MVLC::ContextTest < Minitest::Test
   context "Context" do
 
     setup do
+      VLC::System.stubs(:new)
       @input = Object.new
       @context = MVLC::Context.new(@input)
       @player = Object.new

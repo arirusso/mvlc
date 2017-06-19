@@ -5,6 +5,10 @@ class MVLC::Instructions::PlayerTest < Minitest::Test
   context "Player" do
 
     setup do
+      @player = Object.new
+      @player.stubs(:quit)
+      @player.stubs(:seek).returns(true)
+      VLC::System.stubs(:new).returns(@player)
       @input = Object.new
       @context = MVLC::Context.new(@input)
       assert @context.kind_of?(MVLC::Instructions::Player)

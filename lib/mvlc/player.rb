@@ -1,4 +1,3 @@
-require "mvlc/player/invoker"
 require "mvlc/player/messenger"
 require "mvlc/player/state"
 require "mvlc/player/wrapper"
