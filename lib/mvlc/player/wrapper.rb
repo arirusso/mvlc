@@ -63,6 +63,7 @@ module MVLC
       def playback_loop
         loop do
           handle_eof if handle_eof?
+          handle_progress if handle_progress?
           sleep(0.05)
         end
         true
@@ -121,6 +122,11 @@ module MVLC
 
       def handle_eof?
         eof? && eof_callback?
+      end
+
+      def handle_progress
+        @callback[:progress].call
+        true
       end
 
       # Handle the end of playback for a single media file
