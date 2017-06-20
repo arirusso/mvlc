@@ -16,6 +16,7 @@ module MVLC
         @callback = {}
         @state = State.new
         @player = VLC::System.new(headless: true)
+        @pid = @player.server.instance_variable_get("@pid")
       end
 
       def volume(value)
@@ -88,11 +89,14 @@ module MVLC
       # Exit the video player
       # @return [Boolean]
       def quit
+        @player.connection.write("quit")
+        # TODO: Process.kill not working here
+        `kill -9 #{@pid}`
         @player.server.stop
         true
       end
 
-      # Add all of the video player methods to the context as instructions
+      # Add all of the video player methods to the wrapper as instructions
       def method_missing(method, *args, &block)
         if @player.respond_to?(method)
           @player.send(method, *args, &block)
@@ -101,7 +105,7 @@ module MVLC
         end
       end
 
-      # Add all of the video player methods to the context as instructions
+      # Add all of the video player methods to the wrapper as instructions
       def respond_to_missing?(method, include_private = false)
         super || @player.respond_to?(method)
       end
