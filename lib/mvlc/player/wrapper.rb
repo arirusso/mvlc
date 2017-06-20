@@ -2,7 +2,7 @@ module MVLC
 
   module Player
 
-    # Wrapper for MPlayer functionality
+    # Wrapper for video player functionality
     class Wrapper
 
       VOLUME_FACTOR = 2.4
@@ -44,7 +44,7 @@ module MVLC
         end
       end
 
-      # Is MPlayer active?
+      # Is the video player active?
       # @return [Boolean]
       def active?
         !@player.nil?
@@ -85,14 +85,14 @@ module MVLC
         true
       end
 
-      # Cause MPlayer to exit
+      # Exit the video player
       # @return [Boolean]
       def quit
         @player.server.stop
         true
       end
 
-      # Add all of the MPlayer::Slave methods to the context as instructions
+      # Add all of the video player methods to the context as instructions
       def method_missing(method, *args, &block)
         if @player.respond_to?(method)
           @player.send(method, *args, &block)
@@ -101,7 +101,7 @@ module MVLC
         end
       end
 
-      # Add all of the MPlayer::Slave methods to the context as instructions
+      # Add all of the video player methods to the context as instructions
       def respond_to_missing?(method, include_private = false)
         super || @player.respond_to?(method)
       end

@@ -33,15 +33,15 @@ class MVLC::Instructions::PlayerTest < Minitest::Test
     context "#method_missing" do
 
       setup do
-        @context.player.expects(:mplayer_send).once.with(:seek, 50, :percent).returns(true)
+        @context.player.expects(:seek_percent).once.with(50).returns(true)
       end
 
       teardown do
-        @context.player.unstub(:mplayer_send)
+        @context.player.unstub(:seek_percent)
       end
 
       should "delegate" do
-        refute_nil @context.seek(50, :percent)
+        refute_nil @context.seek_percent(50)
       end
 
     end
@@ -49,11 +49,11 @@ class MVLC::Instructions::PlayerTest < Minitest::Test
     context "#respond_to?" do
 
       setup do
-        @context.player.expects(:mplayer_respond_to?).once.with(:seek).returns(true)
+        @context.player.expects(:respond_to?).once.with(:seek).returns(true)
       end
 
       teardown do
-        @context.player.unstub(:mplayer_respond_to?)
+        @context.player.unstub(:respond_to?)
       end
 
       should "delegate" do

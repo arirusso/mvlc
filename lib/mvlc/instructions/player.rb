@@ -2,7 +2,7 @@ module MVLC
 
   module Instructions
 
-    # Instructions dealing with the MPlayer
+    # Instructions dealing with the video player
     module Player
 
       # Assign a callback for updating progress
@@ -30,7 +30,7 @@ module MVLC
         base.send(:def_delegators, :@player, :active?, :play)
       end
 
-      # Add all of the MPlayer::Slave methods to the context as instructions
+      # Add all of the video player methods to the context as instructions
       def method_missing(method, *args, &block)
         if @player.respond_to?(method)
           @player.send(method, *args, &block)
@@ -39,7 +39,7 @@ module MVLC
         end
       end
 
-      # Add all of the MPlayer::Slave methods to the context as instructions
+      # Add all of the video player methods to the context as instructions
       def respond_to_missing?(method, include_private = false)
         super || @player.respond_to?(method)
       end

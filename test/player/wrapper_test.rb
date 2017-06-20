@@ -10,6 +10,9 @@ class MVLC::Player::WrapperTest < Minitest::Test
       conn = Object.new
       conn.stubs(:write)
       @player.stubs(:connection).returns(conn)
+      server = Object.new
+      server.stubs(:stop)
+      @player.stubs(:server).returns(server)
       VLC::System.stubs(:new).returns(@player)
       @player = MVLC::Player::Wrapper.new
     end
@@ -26,7 +29,7 @@ class MVLC::Player::WrapperTest < Minitest::Test
       #  @player.instance_variable_get("@threads").first.unstub(:kill)
       end
 
-      should "exit MPlayer and kill the player thread" do
+      should "exit video player and kill the player thread" do
         assert @player.quit
       end
 
@@ -42,7 +45,7 @@ class MVLC::Player::WrapperTest < Minitest::Test
         @player.unstub(:play)
       end
 
-      should "lazily invoke mplayer and play" do
+      should "play video" do
         assert @player.play("file.mov")
       end
 

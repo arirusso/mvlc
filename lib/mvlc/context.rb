@@ -1,6 +1,6 @@
 module MVLC
 
-  # DSL context for interfacing an instance of MPlayer with MIDI
+  # DSL context for interfacing an video player instance with MIDI
   class Context
 
     include Helper::Numbers
@@ -12,7 +12,6 @@ module MVLC
     # @param [UniMIDI::Input, Array<UniMIDI::Input>] midi_input
     # @param [Hash] options
     # @option options [Integer] :midi_buffer_length Length of MIDI message buffer in seconds
-    # @option options [String] :mplayer_flags The command-line flags to invoke MPlayer with
     # @option options [Integer] :receive_channel (also: :rx_channel) A MIDI channel to subscribe to. By default, responds to all
     # @yield
     def initialize(midi_input, options = {}, &block)
@@ -21,12 +20,11 @@ module MVLC
         :receive_channel => options[:receive_channel] || options[:rx_channel]
       }
       @midi = MIDI.new(midi_input, midi_options)
-      @player = Player.new(:flags => options[:mplayer_flags])
+      @player = Player.new
       instance_eval(&block) if block_given?
     end
 
-    # Start listening for MIDI
-    # Note that MPlayer will start when Context#play (aka Instructions::Player#play) is called
+    # Start listening for MIDI, start video player
     # @param [Hash] options
     # @option options [Boolean] :background Whether to run in a background thread
     # @return [Boolean]
