@@ -4,7 +4,7 @@ module MVLC
 
     class State
 
-      attr_accessor :eof, :pause, :play
+      attr_accessor :eof, :pause, :play, :volume
       alias_method :eof?, :eof
       alias_method :pause?, :pause
       alias_method :paused?, :pause
@@ -15,6 +15,7 @@ module MVLC
         @eof = false
         @play = false
         @pause = false
+        @volume = nil
       end
 
       def toggle_pause

@@ -20,7 +20,9 @@ module MVLC
       end
 
       def volume(value)
-        @player.volume(value * VOLUME_FACTOR)
+        @state.volume = value * VOLUME_FACTOR
+        @player.volume(@state.volume)
+        @state.volume
       end
 
       def seek_percent(percent)
