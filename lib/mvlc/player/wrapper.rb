@@ -5,7 +5,7 @@ module MVLC
     # Wrapper for video player functionality
     class Wrapper
 
-      VOLUME_FACTOR = 2.4
+      VOLUME_FACTOR = 2.4 # Factor at which volume value is scaled
 
       extend Forwardable
 
@@ -19,12 +19,20 @@ module MVLC
         @pid = player_pid
       end
 
+      # Set the volume level to the given value.
+      # Value is expected to be 0..100 but this is not strictly enforced
+      # @param [Integer] value
+      # @return [Integer]
       def volume(value)
         @state.volume = value * VOLUME_FACTOR
         @player.volume(@state.volume)
         @state.volume
       end
 
+      # Seek to the given percent in the currently playing file
+      # Value is expected to be 0..100
+      # @param [Integer] value
+      # @return [Integer]
       def seek_percent(percent)
         begin
           length_in_seconds = @player.length
@@ -111,43 +119,61 @@ module MVLC
 
       private
 
+      # Instantiate the VLC player instance
+      # @return [VLC::System]
       def initialize_player
         VLC::System.new(headless: true)
       end
 
+      # The OS PID of the player
+      # @return [Integer]
       def player_pid
         @player.server.instance_variable_get("@pid")
       end
 
+      # Kill the VLC player instance
+      # @return [Boolean]
       def kill_player
         @player.connection.write("quit")
         # TODO: Process.kill not working here
         `kill -9 #{@pid}`
         @player.server.stop
+        true
       end
 
+      # Should a progress callback be fired?
+      # @return [Boolean]
       def handle_progress?
         @state.progressing? && progress_callback?
       end
 
+      # Has a progress callback been specified?
+      # @return [Boolean]
       def progress_callback?
         !@callback[:progress].nil?
       end
 
+      # Has an EOF callback been specified?
+      # @return [Boolean]
       def eof_callback?
         !@callback[:end_of_file].nil?
       end
 
+      # Should an EOF callback be fired?
+      # @return [Boolean]
       def handle_eof?
         eof? && eof_callback?
       end
 
+      # Fire the progress callback. Used during the playback loop
+      # @return [Boolean]
       def handle_progress
         @callback[:progress].call(@player.progress)
         true
       end
 
       # Handle the end of playback for a single media file
+      # @return [Boolean]
       def handle_eof
         @callback[:end_of_file].call
         @state.handle_eof
@@ -155,10 +181,14 @@ module MVLC
       end
 
       # Handle the beginning of playback for a single media file
+      # @return [Boolean]
       def handle_start
         @state.handle_start
+        true
       end
 
+      # Is media playing?
+      # @return [Boolean]
       def playing?
         begin
           @player.playing?
