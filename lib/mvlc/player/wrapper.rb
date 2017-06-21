@@ -74,8 +74,7 @@ module MVLC
       # @return [Boolean]
       def playback_loop
         loop do
-          handle_eof if handle_eof?
-          handle_progress if handle_progress?
+          handle_playback_events
           sleep(0.05)
         end
         true
@@ -119,6 +118,15 @@ module MVLC
       end
 
       private
+
+      # Fire playback event callbacks when appropriate during
+      # the playback loop
+      # @return [Boolean]
+      def handle_playback_events
+        handle_eof if handle_eof?
+        handle_progress if handle_progress?
+        true
+      end
 
       # Instantiate the VLC player instance
       # @return [VLC::System]
