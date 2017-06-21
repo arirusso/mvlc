@@ -15,8 +15,8 @@ module MVLC
       def initialize(options = {})
         @callback = {}
         @state = State.new
-        @player = VLC::System.new(headless: true)
-        @pid = @player.server.instance_variable_get("@pid")
+        @player = initialize_player
+        @pid = player_pid
       end
 
       def volume(value)
@@ -89,10 +89,7 @@ module MVLC
       # Exit the video player
       # @return [Boolean]
       def quit
-        @player.connection.write("quit")
-        # TODO: Process.kill not working here
-        `kill -9 #{@pid}`
-        @player.server.stop
+        kill_player
         true
       end
 
@@ -111,6 +108,21 @@ module MVLC
       end
 
       private
+
+      def initialize_player
+        VLC::System.new(headless: true)
+      end
+
+      def player_pid
+        @player.server.instance_variable_get("@pid")
+      end
+
+      def kill_player
+        @player.connection.write("quit")
+        # TODO: Process.kill not working here
+        `kill -9 #{@pid}`
+        @player.server.stop
+      end
 
       def handle_progress?
         @state.progressing? && progress_callback?
