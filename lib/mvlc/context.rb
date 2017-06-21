@@ -14,13 +14,14 @@ module MVLC
     # @option options [Integer] :midi_buffer_length Length of MIDI message buffer in seconds
     # @option options [Integer] :receive_channel (also: :rx_channel) A MIDI channel to subscribe to. By default, responds to all
     # @yield
-    def initialize(midi_input, options = {})
+    def initialize(midi_input, options = {}, &block)
       midi_options = {
         :buffer_length => options[:midi_buffer_length],
         :receive_channel => options[:receive_channel] || options[:rx_channel]
       }
       @midi = MIDI.new(midi_input, midi_options)
       @player = Player.new
+      instance_eval(&block) if block_given?
     end
 
     # Start listening for MIDI, start video player
