@@ -25,7 +25,7 @@ require "mvlc"
   # When MIDI control change 1 is received...
   cc(3) do |value|
     percent = to_percent(value) # The received value is converted to percentage eg 0..100
-    volume(value) # the media volume is set to that percentage
+    set_volume(value) # the media volume is set to that percentage
   end
 
   # When MIDI control change 20 is received...

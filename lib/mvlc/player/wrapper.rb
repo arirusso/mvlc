@@ -23,11 +23,12 @@ module MVLC
       # Value is expected to be 0..100 but this is not strictly enforced
       # @param [Integer] value
       # @return [Integer]
-      def volume(value)
+      def volume=(value)
         @state.volume = value * VOLUME_FACTOR
         @player.volume(@state.volume)
         @state.volume
       end
+      alias_method :set_volume, :volume=
 
       # Seek to the given percent in the currently playing file
       # Value is expected to be 0..100
