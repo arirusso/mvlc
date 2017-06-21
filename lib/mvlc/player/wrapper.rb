@@ -141,7 +141,7 @@ module MVLC
       end
 
       def handle_progress
-        @callback[:progress].call
+        @callback[:progress].call(@player.progress)
         true
       end
 
