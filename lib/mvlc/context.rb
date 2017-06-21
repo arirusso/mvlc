@@ -30,7 +30,9 @@ module MVLC
     def start(options = {})
       @midi.start
       begin
-        @playback_thread = playback_loop
+        @playback_thread = ::MVLC::Thread.new(:timeout => false) do
+          playback_loop
+        end
         @playback_thread.join unless !!options[:background]
       rescue SystemExit, Interrupt
         stop
@@ -51,12 +53,11 @@ module MVLC
 
     # Main playback loop
     def playback_loop
-      ::MVLC::Thread.new(:timeout => false) do
-        until @player.active?
-          sleep(0.1)
-        end
-        @player.playback_loop
+      until @player.active?
+        sleep(0.1)
       end
+      @player.playback_loop
+      true
     end
 
   end
