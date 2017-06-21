@@ -14,19 +14,22 @@ require "mvlc"
   rx_channel 0
 
   # When a MIDI start message is received, start playing the media file 1.mov
-  note(1) { play("../test/media/1.mov") }
+  note(0) { play("../spec/media/1.mov") }
 
   # When MIDI note 1 is received: a media file 2.mov will begin playing
-  note(2) { play("../test/media/2.mov") }
+  note(1) { play("../spec/media/2.mov") }
 
   # When MIDI note C2 (aka 36) is received: a media file 3.mov will begin playing
-  note(3) { play("../test/media/3.mov") }
+  note(2) { play("../spec/media/3.mov") }
 
-  # When MIDI control change 1 is received, the media volume is set to the received value
-  cc(1) { |value| volume(value) }
+  # When MIDI control change 1 is received...
+  cc(3) do |value|
+    percent = to_percent(value) # The received value is converted to percentage eg 0..100
+    volume(value) # the media volume is set to that percentage
+  end
 
   # When MIDI control change 20 is received...
-  cc(20) do |value|
+  cc(4) do |value|
     percent = to_percent(value) # The received value is converted to percentage eg 0..100
     seek_percent(percent) # That position in the media file is then moved to
   end
