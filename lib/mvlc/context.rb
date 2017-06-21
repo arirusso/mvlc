@@ -7,7 +7,7 @@ module MVLC
     include Instructions::MIDI
     include Instructions::Player
 
-    attr_reader :midi, :player
+    attr_reader :midi, :playback_thread, :player
 
     # @param [UniMIDI::Input, Array<UniMIDI::Input>] midi_input
     # @param [Hash] options
