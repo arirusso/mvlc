@@ -35,8 +35,9 @@ module MVLC
           playback_loop
         end
         @playback_thread.join unless !!options[:background]
-      rescue SystemExit, Interrupt
+      rescue SystemExit, Interrupt => e
         stop
+        raise(e)
       end
       true
     end
