@@ -24,7 +24,7 @@ require "mvlc/context"
 
 module MVLC
 
-  VERSION = "0.0.5"
+  VERSION = "0.0.6"
 
   # Shortcut to Context constructor
   def self.new(*args, &block)
