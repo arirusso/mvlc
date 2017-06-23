@@ -9,7 +9,7 @@ module MVLC
 
       extend Forwardable
 
-      attr_reader :state, :player
+      attr_reader :state, :pid, :player
 
       # @param [Hash] options
       def initialize(options = {})
@@ -143,9 +143,12 @@ module MVLC
       # Kill the VLC player instance
       # @return [Boolean]
       def kill_player
-        @player.connection.write("quit")
+        begin
+          @player.connection.write("quit")
+        rescue Errno::EBADF
+        end
         # TODO: Process.kill not working here
-        `kill -9 #{@pid}`
+        `kill -9 #{@pid}` unless @pid.nil?
         @player.server.stop
         true
       end
