@@ -180,8 +180,12 @@ module MVLC
       # Fire the progress callback. Used during the playback loop
       # @return [Boolean]
       def handle_progress
-        @callback[:progress].call(@player.progress)
-        true
+        begin
+          @callback[:progress].call(@player.progress)
+          true
+        rescue VLC::ReadTimeoutError
+          false
+        end
       end
 
       # Handle the end of playback for a single media file
